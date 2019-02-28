@@ -17,9 +17,9 @@ def getFileNames(source):
 def displayImageLabels(imagepath, boundaries):
     img = cv.imread(imagepath, 1)
     for box in boundaries:
-        cv.rectangle(img,(box[0], box[1]), (box[0] +box[2], box[1] + box[3]),(0,255,0),2)
+        cv.rectangle(img,(box[0], box[1]), (box[2],box[3]),(0,255,0),2)
 
-    img = cv.resize(img, (960,540))
+    #img = cv.resize(img, (960,540))
     cv.imshow("Display Boundaries", img)
     cv.waitKey(2000)
 
@@ -27,6 +27,7 @@ def getBoundaries(filepath):
     file = pd.read_csv(filepath, header=None, delimiter=" ")
     file.iloc[:,1:] = file.iloc[:,1:].astype('float64')
     boundaries = []
+    print([width, height])
     for index, row in file.iterrows():
         row = []
         row.append(int(file.at[index, 1] * width))
@@ -47,5 +48,6 @@ if __name__ == "__main__":
             width, height = img.size
 
         boundaries = getBoundaries(labels + name + ".txt")
+        print(boundaries)
         displayImageLabels(images + name + ".jpg", boundaries)
 
