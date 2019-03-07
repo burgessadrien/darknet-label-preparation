@@ -3,14 +3,18 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 
-labels = "/home/adrien/Downloads/test_pothole/labels/"
-images = "/home/adrien/Downloads/test_pothole/images/"
+labels = "labels/"
+images = "images/"
 width = 0
 height = 0
 
 for filename in os.listdir(labels):
-    with Image.open(images + filename.split(".")[0] + ".jpg") as img:
-        width, height = img.size
+    try:
+        with Image.open(images + filename.split(".")[0] + ".jpg") as img:
+            width, height = img.size
+    except:
+        continue
+
     filepath = labels + filename
     file = pd.read_csv(filepath, header=None, delimiter=r" ")
     file.iloc[:,1:] = file.iloc[:,1:].astype('float64')

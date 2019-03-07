@@ -39,13 +39,16 @@ def getBoundaries(filepath):
     return boundaries
 
 if __name__ == "__main__":
-    labels = "/home/adrien/Downloads/pothole_training/simple_labels/"
-    images = "/home/adrien/Downloads/pothole_training/simple_images/"
+    labels = "labels/"
+    images = "images/"
     names = getFileNames(labels)
 
     for name in names:
-        with Image.open(images + name + ".jpg") as img:
-            width, height = img.size
+        try:
+            with Image.open(images + name + ".jpg") as img:
+                width, height = img.size
+        except:
+            continue
 
         boundaries = getBoundaries(labels + name + ".txt")
         print(boundaries)
